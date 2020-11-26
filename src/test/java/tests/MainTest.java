@@ -17,4 +17,37 @@ public class MainTest {
         $$(by("data-widget-name", "CatalogCard")).shouldHave(size(5));
     }
 
+    @Test
+    public void baseTest() {
+        Selenide.open("https://alfabank.ru/make-money/");
+        $(by("data-test-id", "tabs-list"))
+                .scrollIntoView(true)
+                .$(byText("Страхование вкладов")).click();
+
+        $$("[data-test-id^=\"accordion-item\"]").shouldHaveSize(4);
+    }
+
+    @Test
+    public void siblingAndParentTest() {
+        Selenide.open("https://alfabank.ru/make-money/");
+        $(by("data-test-id", "tabs-list"))
+                .scrollIntoView(true)
+                .$(byText("Описание"))
+                .parent()
+                .sibling(0).click();
+
+        $$("[data-test-id^=\"accordion-item\"]").shouldHaveSize(4);
+    }
+
+    @Test
+    public void closestAndPrecedingTest() {
+        Selenide.open("https://alfabank.ru/make-money/");
+        $(by("data-test-id", "tabs-list"))
+                .scrollIntoView(true)
+                .$(byText("Что такое вклад?"))
+                .closest("button")
+                .preceding(0).click();
+
+        $$("[data-test-id^=\"accordion-item\"]").shouldHaveSize(4);
+    }
 }
